@@ -151,6 +151,33 @@ function cargarLocalStorage() {
     }
 };
 
+//Borrar Item del Pedido
+function borrarItemPedido(evento){
+    const id = evento.target.dataset.item;
+    //Filtrar
+    Pedido = Pedido.filter((PedidoId) =>{
+        return PedidoId !== id;
+    });
+
+    //Llamar el Pedido
+    renderizarPedidos();
+    //Calculo
+    calcularTotal();
+    //Actualizar el LocalStorage
+    guardarPedidoLocalStorage();
+}
+
+//Vaciar el Pedido
+function vaciarPedidos() {
+    //Limpiar todos los productos solicitados
+    Pedido = [];
+    //Renderizar el pedido
+    renderizarPedidos();
+    calcularTotal();
+    //Borrar el LocalStorage
+    localStorage.clear();
+
+}
 //Llamar las funciones
 renderizarProductos();
 

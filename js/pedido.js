@@ -23,7 +23,7 @@ window.onload = function() {
     ]
 
 //Crear variables del pedido, total, localstorage e items
-let pedido = [];
+let Pedido = [];
 let total = 0;
 const DOMitems = document.querySelector('#items');
 const DOMpedido = document.querySelector('#pedido');
@@ -90,6 +90,12 @@ function renderizarProductos() {
 function agregarProductoP(evento) {
     //Tener  presente la etiqueta ul con id=pedido, en el index, para agregar el producto
     pedido.push(evento.target.setAttribute('marcador'));
+    //Calcular el Total
+    calcularTotal();
+    //Pedido
+    renderizarPedidos();
+    //Guardar en el LocalStorage
+    guardarPedidoLocalStorage();
 } 
 
 //Crear la función para el Pedido
@@ -113,6 +119,16 @@ function renderizarPedidos() {
         const miNodo = document.createElement('li');
         miNodo.classList.add('list-group-item', 'text-right', 'mx-2');
         miNodo.textContent = `${numeroUnidadesItem} x ${miItem[0].nombre} - ${miItem[0].precio}`;
+        //Botón
+        const miBoton = document.createElement('button');
+        miBoton.classList.add('btn', 'btn-danger', 'mx-5');
+        miBoton.textContent = 'X';
+        miBoton.style.marginLeft = '1rem';
+        miBoton.dataset.item = item;
+        miBoton.addEventListener('click',borrarItemPedido);
+        
+        miNodo.appendChild(miBoton);
+        DOMpedido.appendChild(miNodo);
         
     });
 }
@@ -178,7 +194,14 @@ function vaciarPedidos() {
     localStorage.clear();
 
 }
+
+//Evento
+DOMbotonVaciar.addEventListener('click', vaciarPedidos);
+
 //Llamar las funciones
+cargarLocalStorage();
 renderizarProductos();
+calcularTotal();
+renderizarPedidos();
 
 };

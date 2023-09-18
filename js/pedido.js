@@ -21,7 +21,6 @@ window.onload = function() {
            imagen:'/images/pizza.jpg', 
         },
     ]
-};
 
 //Crear variables del pedido, total, localstorage e items
 let pedido = [];
@@ -117,3 +116,42 @@ function renderizarPedidos() {
         
     });
 }
+
+//Función Calcular Total del Pedido
+
+function calcularTotal() {
+    //Vaciar el Total Anterior
+    total = 0;
+    //Recorrer el array del pedido
+    Pedido.forEach((item) =>{
+        //De cada elemento obtener el precio
+        const miItem = baseDatos.filter((itemBaseDatos)=>{
+        //Retornar el Valor
+        return itemBaseDatos.id === parseInt(item.id);
+        });
+        //Se hace el calculo
+        total = total + miItem[0].precio;
+    });
+
+    //Imprimir el total
+    DOMtotal.textContent = total.toFixed(2);
+
+}
+
+//Guardar en el localstorage
+function guardarPedidoLocalStorage() {
+    mylocalStorage.setItem('Pedido', JSON.stringify(Pedido));
+}
+
+//Cargar pedido en el localstorage
+function cargarLocalStorage() {
+    if (mylocalStorage.getItem('Pedido') !== null) {
+        //Cargar la Información
+        Pedido = JSON.parse(mylocalStorage.getItem('Pedido'));
+    }
+};
+
+//Llamar las funciones
+renderizarProductos();
+
+};

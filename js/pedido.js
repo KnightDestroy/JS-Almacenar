@@ -89,7 +89,7 @@ function renderizarProductos() {
 
 function agregarProductoP(evento) {
     //Tener  presente la etiqueta ul con id=pedido, en el index, para agregar el producto
-    pedido.push(evento.target.setAttribute('marcador'));
+    Pedido.push(evento.target.getAttribute('marcador'));
     //Calcular el Total
     calcularTotal();
     //Pedido
@@ -103,7 +103,7 @@ function renderizarPedidos() {
     //Limpiar todo los items en el HTML
     DOMpedido.textContent = ''; 
     //Quitar los duplicados
-    const PedidoSinDuplicados = [...new Set(pedido)];
+    const PedidoSinDuplicados = [...new Set(Pedido)];
     //Generar el pedido de acuerdo a los items
     PedidoSinDuplicados.forEach((item) => {
         //Obtenemos los items de la Base de Datos
@@ -111,7 +111,7 @@ function renderizarPedidos() {
             return itemBaseDatos.id === parseInt(item);
         });
         //Contar la cantidad de veces que se repite el producto
-        const numeroUnidadesItem = pedido.reduce((total, itemId) => {
+        const numeroUnidadesItem = Pedido.reduce((total, itemId) => {
             //Si coinciden los ID, incremento
             return itemId === item ? total += 1 : total;
         }, 0);
@@ -143,7 +143,7 @@ function calcularTotal() {
         //De cada elemento obtener el precio
         const miItem = baseDatos.filter((itemBaseDatos)=>{
         //Retornar el Valor
-        return itemBaseDatos.id === parseInt(item.id);
+        return itemBaseDatos.id === parseInt(item);
         });
         //Se hace el calculo
         total = total + miItem[0].precio;
